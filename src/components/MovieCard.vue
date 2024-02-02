@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
 import { TMovieData } from "@/types/movies";
-import useMoviesTrends from "@composables/useMoviesTrends";
+import useMoviesFavorites from "@composables/useMoviesFavorites";
 
-const moviesTrends = useMoviesTrends()
+const moviesFavorites = useMoviesFavorites()
 
 const emit = defineEmits<{
     (e: "onHover", pictureURL: string): void;
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const isFavorite = computed(() => {
-    return !!moviesTrends.favorites.value.find((e) => e.id === props.data.id);
+    return !!moviesFavorites.favorites.value.find((e) => e.id === props.data.id);
 });
 
 const getFavoriteIcon = computed(() => {
@@ -31,8 +31,9 @@ const getLinkImage = (picturePath: string, originalSize: boolean = false) => {
 };
 
 const toggleFavorite = () => {
-    if (isFavorite.value) moviesTrends.removeFavorite(props.data);
-    else moviesTrends.addFavorite(props.data);
+  isFavorite.value
+    ? moviesFavorites.removeFavorite(props.data)
+    : moviesFavorites.addFavorite(props.data)
 };
 
 onMounted(() => {

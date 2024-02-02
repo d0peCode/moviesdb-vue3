@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useMoviesStore } from "@/stores/movies";
+import { ref } from "vue";
 import { BaseCard, MovieCard } from "@/app.organizer";
-import useMoviesTrends from "@composables/useMoviesTrends";
+import useMoviesFavorites from "@composables/useMoviesFavorites";
 
 const backgroundImage = ref("");
 
-const { favorites } = useMoviesTrends()
+const { favorites } = useMoviesFavorites()
 
 const updateBackgroundImage = (imagePath: string) => {
     backgroundImage.value = imagePath;
