@@ -19,6 +19,6 @@ export default (requestConstructor: any, requestValues: any = {}):
 
     if (request)
         response = useResponse({ method: request.method, path: request.path, exec: request.exec });
-    else throw new Error('Something went wront with your API request.');
+    else throw new Error('Something went wrong with your API request.');
     return response;
 };
