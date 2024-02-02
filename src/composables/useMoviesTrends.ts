@@ -14,7 +14,6 @@ const useMoviesTrends = () => {
 
     if (response.isSuccess) {
       movies.value = response.data.results.slice(0, 4);
-      console.log('after set', movies.value)
     }
     loading.value = false;
   };
