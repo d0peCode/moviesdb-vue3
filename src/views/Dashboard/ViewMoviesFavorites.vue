@@ -2,11 +2,12 @@
 import { ref, computed } from "vue";
 import { useMoviesStore } from "@/stores/movies";
 import { BaseCard, MovieCard } from "@/app.organizer";
+import useMoviesTrends from "@composables/useMoviesTrends";
 
 const backgroundImage = ref("");
-const moviesStore = useMoviesStore();
 
-const moviesFavorites = computed(() => moviesStore.favorites);
+const { favorites } = useMoviesTrends()
+
 const updateBackgroundImage = (imagePath: string) => {
     backgroundImage.value = imagePath;
 };
@@ -28,12 +29,12 @@ const updateBackgroundImage = (imagePath: string) => {
             class="db-index z-20 pt-20 mx-auto w-5/6 max-w-screen-xl flex-1 flex justify-center items-center"
         >
             <BaseCard title="My favorites" :external-title="true">
-                <template v-if="moviesFavorites.length">
+                <template v-if="favorites.length">
                     <div
                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 a-07 fadeInUp"
                     >
                         <MovieCard
-                            v-for="(movie, index) in moviesFavorites"
+                            v-for="(movie, index) in favorites"
                             :key="'m-' + index"
                             :data="movie"
                             @onHover="updateBackgroundImage"

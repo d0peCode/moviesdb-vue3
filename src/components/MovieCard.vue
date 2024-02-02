@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { onMounted, computed } from "vue";
-import { useMoviesStore } from "@/stores/movies";
 import { TMovieData } from "@/types/movies";
+import useMoviesTrends from "@composables/useMoviesTrends";
 
-const movies = useMoviesStore();
+const moviesTrends = useMoviesTrends()
 
 const emit = defineEmits<{
     (e: "onHover", pictureURL: string): void;
@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const isFavorite = computed(() => {
-    return !!movies.favorites.find((e) => e.id === props.data.id);
+    return !!moviesTrends.favorites.value.find((e) => e.id === props.data.id);
 });
 
 const getFavoriteIcon = computed(() => {
@@ -31,8 +31,8 @@ const getLinkImage = (picturePath: string, originalSize: boolean = false) => {
 };
 
 const toggleFavorite = () => {
-    if (isFavorite.value) movies.removeFavorite(props.data);
-    else movies.addFavorite(props.data);
+    if (isFavorite.value) moviesTrends.removeFavorite(props.data);
+    else moviesTrends.addFavorite(props.data);
 };
 
 onMounted(() => {
@@ -53,6 +53,7 @@ onMounted(() => {
         ></div>
         <div class="top flex justify-end z-20">
             <img
+              alt=""
                 class="cursor-pointer"
                 :src="getFavoriteIcon"
                 @click="toggleFavorite"
